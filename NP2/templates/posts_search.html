@@ -10,30 +10,29 @@ Posts
 
 {% block content %}
    <h1>Все новости</h1>
-
-
+    <form action="" method="get">
+        {# Переменная, которую мы передали через контекст, может сгенерировать нам форму с полями #}
+        {{ filterset.form.as_p }}
+        {# Добавим кнопку отправки данных формы #}
+        <input type="submit" value="Найти" />
+    </form>
    <h3>{% current_time '%b %d %Y %A' %}</h3>
-
    <hr>
-   {% if posts %}
+   {% if post_search %}
        <table>
            <tr>
-               <td><h4>ID</h4></td>
                <td><h4>Название</h4></td>
                <td><h4>Дата публикации</h4></td>
                <td><h4>Текст</h4></td>
                <td><h4>Автор</h4></td>
-               <td><h4>Тип публикации</h4></td>
            </tr>
 
-           {% for post in posts %}
+           {% for post in post_search %}
            <tr>
-               <td><h5>{{ post.id }}</h5></td>
                <td><h5>{{ post.heading|censor }}</h5></td>
                <td><h5>{{ post.time_create }}</h5></td>
                <td><h5>{{ post.text|truncatechars:20|censor }}</h5></td>
                <td><h5>{{ post.author }}</h5></td>
-               <td><h5>{{ post.get_post_type_display }}</h5></td>
            </tr>
            {% endfor %}
 
@@ -65,3 +64,4 @@ Posts
    {% endif %}
 
 {% endblock content %}
+

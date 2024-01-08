@@ -15,5 +15,5 @@ Post
 <h1>{{ post.heading|censor }}</h1>
 <h3>{{ post.text|censor }}</h3>
 <h3>Дата публикации: {{ post.time_create|date:"Y-m-d" }}</h3>
-<div align="right">Рейтинг: {{ post.rating_post }}</div>
+<div align="right">Тип статьи: {{ post.get_post_type_display }}. Рейтинг: {{ post.rating_post }}</div>
 {% endblock content %}
