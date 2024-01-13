@@ -6,6 +6,7 @@ from .filters import SearchFilter
 from .forms import PostForm
 from django.shortcuts import render
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import PermissionRequiredMixin
 
 class PostsList(ListView):
     model = Post
@@ -48,7 +49,8 @@ class PostSearch(ListView):
         self.filterset = SearchFilter(self.request.GET, queryset)
         return self.filterset.qs
 
-class PostCreate(LoginRequiredMixin, CreateView):
+class PostCreate(PermissionRequiredMixin, CreateView):
+    permission_required = ('NewsPortal.post', )
     form_class = PostForm
     model = Post
     template_name = 'post_create.html'
@@ -60,22 +62,26 @@ class PostCreate(LoginRequiredMixin, CreateView):
         post.save()
         return super().form_valid(form)
 
-class NewsDelete(LoginRequiredMixin, DeleteView):
+class NewsDelete(PermissionRequiredMixin, DeleteView):
+    permission_required = ('NewsPortal.post',)
     model = Post
     template_name = 'news_delete.html'
     success_url = reverse_lazy('news_list')
 
-class NewsEdit(LoginRequiredMixin, UpdateView):
+class NewsEdit(PermissionRequiredMixin, UpdateView):
+    permission_required = ('NewsPortal.post',)
     form_class = PostForm
     model = Post
     template_name = 'news_edit.html'
 
-class ArticleDelete(LoginRequiredMixin, DeleteView):
+class ArticleDelete(PermissionRequiredMixin, DeleteView):
+    permission_required = ('NewsPortal.post',)
     model = Post
     template_name = 'article_delete.html'
     success_url = reverse_lazy('news_list')
 
-class ArticleEdit(LoginRequiredMixin, UpdateView):
+class ArticleEdit(PermissionRequiredMixin, UpdateView):
+    permission_required = ('NewsPortal.post',)
     form_class = PostForm
     model = Post
     template_name = 'article_edit.html'
