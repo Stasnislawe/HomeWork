@@ -5,4 +5,4 @@ class NewsportalConfig(AppConfig):
     name = 'NewsPortal'
 
     def ready(self):
-        import NewsPortal.signals
+        import NewsPortal.signal

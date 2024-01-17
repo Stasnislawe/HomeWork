@@ -5,9 +5,8 @@ from django.db.models.functions import Coalesce
 from django.urls import reverse
 
 class Author(models.Model):
-    rating = models.IntegerField(default=0)
-
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    rating = models.IntegerField(default=0)
 
     def __str__(self):
         return self.user.username
@@ -17,17 +16,12 @@ class Author(models.Model):
         comment_rating = self.user.comments.aggregate(cr=Coalesce(Sum('rating_comment'), 0)).get('cr')
         posts_comment_rating = self.posts.aggregate(pcr=Coalesce(Sum('comment__rating_comment'), 0)).get('pcr')
 
-        print(post_rating)
-        print('====================')
-        print(comment_rating)
-        print('====================')
-        print(posts_comment_rating)
-
         self.rating = post_rating * 3 + comment_rating + posts_comment_rating
         self.save()
 
 class Category(models.Model):
     name_category = models.CharField(max_length=100, unique = True)
+    subscribers = models.ManyToManyField(User, blank=True, null=True, related_name='categories')
 
     def __str__(self):
         return self.name_category
@@ -90,6 +84,4 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.comment, self.time_create_comment, self.rating_comment, self.post, self.user
-
-
 

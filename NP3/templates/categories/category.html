@@ -9,13 +9,13 @@ Posts
 {% endblock title %}
 
 {% block content %}
-   <h1>Все новости</h1>
+   <h1>Все новости на категорию {{ category.name_category }}</h1>
 
 
    <h3>{% current_time '%b %d %Y %A' %}</h3>
 
    <hr>
-   {% if posts %}
+   {% if category_news_list %}
        <table>
            <tr>
                <td style="width: 80px; text-align: center;"><h4>ID</h4></td>
@@ -27,7 +27,7 @@ Posts
                <td><h4>Тип публикации</h4></td>
            </tr>
 
-           {% for post in posts %}
+           {% for post in category_news_list %}
            <tr>
                <td><h5><a href="{{ post.id }}">{{ post.id }}</a></h5></td>
                <td><h5>{{ post.heading|censor }}</h5></td>
@@ -46,7 +46,11 @@ Posts
            {% endfor %}
 
        </table>
-   {% else %}
+        {% if is_not_subscriber %}
+            <p class="text-center"><a href="{% url 'subscribe' category.id %}" class="btn btn-secondary btn-sm">Подписаться</a></p>
+        {% endif %}
+    {% else %}
+
        <h2>Новостей нет!</h2>
    {% endif %}
 {# Добавляем пагинацию на страницу #}
