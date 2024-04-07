@@ -8,6 +8,9 @@
     <p>Дата создания:  {{advert.time_create}}</p>
     <p>Название:  {{advert.heading}}</p>
     <p>Текст: {{advert.text}}</p>
+    {% if advert.n_photos %}
+    <p><img class="img-article-left" src="{{ advert.n_photos.url }}"></p>
+    {% endif %}
 
 
     <p>Комментарии ({{advert.advert_comment.all.count}})</p>

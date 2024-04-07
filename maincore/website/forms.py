@@ -14,9 +14,9 @@ from .models import Comment, Advert, User
 
 
 
-# class SignupRegForm(UserCreationForm):
-#     class Meta(UserCreationForm.Meta):
-#         model = User
+class SignupRegForm(UserCreationForm):
+    class Meta(UserCreationForm.Meta):
+        model = User
 
 
 class RegistrationForm(SignupForm):

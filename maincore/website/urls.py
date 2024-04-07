@@ -1,8 +1,8 @@
 from django.contrib import admin
 from django.urls import path
-from django.contrib.auth.views import LogoutView
+from django.contrib.auth.views import LogoutView, LoginView
 
-from .views import HomeListView, HomeDetailView, AdvertCreateView, AdvertUpdateView, AdvertDeleteView, profile_view, update_comment_status, ConfirmUser, account_inactive
+from .views import HomeListView, HomeDetailView, AdvertCreateView, AdvertUpdateView, AdvertDeleteView, profile_view, update_comment_status, ConfirmUser, account_inactive, RegisterView
 
 urlpatterns = [
     path('', HomeListView.as_view(), name='home'),
@@ -11,7 +11,8 @@ urlpatterns = [
     path('update_page/<int:pk>', AdvertUpdateView.as_view(), name='update_page'),
     path('delete_page/<int:pk>', AdvertDeleteView.as_view(), name='delete_page'),
     path('profile/', profile_view, name='profile'),
-    #path('signup/', RegisterView.as_view(), name='register'),
+    path('signup/', RegisterView.as_view(), name='register'),
+    path('login', LoginView.as_view(), name='login'),
     path('logout/', LogoutView.as_view(template_name='registration/logout.html'),
          name='logout'),
     path('inactive/', account_inactive, name="account_inactive"),

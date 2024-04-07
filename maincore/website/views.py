@@ -11,7 +11,7 @@ from django.views.generic.edit import FormMixin, CreateView, UpdateView, DeleteV
 from django.template.loader import render_to_string
 
 from .models import Advert, Comment, User
-from .forms import CommentForm, AdvertForm, RegistrationForm
+from .forms import CommentForm, AdvertForm, RegistrationForm, SignupRegForm
 from django.conf import settings
 
 
@@ -101,7 +101,7 @@ class AdvertCreateView(LoginRequiredMixin, CustomSuccessMessageMixin, CreateView
             subject=f'{self.object.heading} ',
             body=self.object.text,
             from_email='uvedomleniynewsportal@ya.ru',
-            to=[],
+            to=['natan_orlov97@mail.ru', 'dromanqs@mail.ru'],
         )
         msg.attach_alternative(html_content, "text/html")
         msg.send()
@@ -142,10 +142,10 @@ class AdvertDeleteView(LoginRequiredMixin, DeleteView):
         self.object.delete()
         return HttpResponseRedirect(success_url)
 
-# class RegisterView(FormView):
-#      form_class = SignupRegForm
-#      template_name = 'registration/signup.html'
-#      success_url = reverse_lazy("profile")
+class RegisterView(FormView):
+     form_class = SignupRegForm
+     template_name = 'registration/signup.html'
+     success_url = reverse_lazy("profile")
 
 
 def update_comment_status(request, pk, type):
@@ -205,7 +205,7 @@ class ConfirmUser(UpdateView):
         return redirect('login')
 
 class AccountInactiveView(TemplateView):
-    template_name = "account/snippets/account_inactive." + app_settings.TEMPLATE_EXTENSION
+    template_name = "account/account_inactive." + app_settings.TEMPLATE_EXTENSION
 
 
 account_inactive = AccountInactiveView.as_view()
